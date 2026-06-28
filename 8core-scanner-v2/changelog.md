@@ -6,6 +6,33 @@ Verzioniranje slijedi [Semantic Versioning](https://semver.org/lang/hr/).
 
 ---
 
+## [2.0.0-fix2] — 2026-06-28
+
+### Ispravak instalacijske logike i dokumentacije putanja (fix2)
+
+#### Izmijenjeno
+
+- **`README.md`** — potpuni ispravak instalacijske dokumentacije:
+  - Jasna razlika između ZIP paketne mape (`8core-scanner-v2/`) i stvarnih instalacijskih putanja
+  - Uputa da se ZIP uvijek raspakira u privremenu lokaciju van web roota (npr. `/root/`)
+  - Primjeri kopiranja s `rsync` koji kopiraju **sadržaj** mapa, ne same mape
+  - Dva konkretna primjera: web panel u subfolderu domene i u rootu subdomene
+  - Primjeri ispravnih i neispravnih rezultata kopiranja (što smije, što ne smije nastati)
+  - Upozorenje da `8core-scanner-v2/` nije instalacijska putanja i da se uklanja nakon instalacije
+  - Upozorenje da se installer otvara iz **konačne instalacijske putanje**, ne iz privremene paketne mape
+  - Napomena da root engine mora biti van web roota bez iznimke
+  - Korak za čišćenje privremene paketne mape nakon instalacije
+- **Instalacijska logika** — potvrđeno da `installer/index.php` ispravno detektira `WEB_APP_PATH`
+  iz stvarne lokacije skripte (`realpath(__DIR__ . '/../')`) neovisno o paketnoj strukturi
+
+#### Nije izmijenjeno
+
+- Sav PHP kod web panela i bash engine kod
+- Struktura ZIP paketa (ostaje kao u fix1)
+- Verzija ostaje **2.0.0** (ovo je korekcija dokumentacije)
+
+---
+
 ## [2.0.0-fix1] — 2026-06-28
 
 ### Korekcija strukture paketa (fix1)

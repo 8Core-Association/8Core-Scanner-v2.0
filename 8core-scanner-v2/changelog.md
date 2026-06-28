@@ -6,6 +6,28 @@ Verzioniranje slijedi [Semantic Versioning](https://semver.org/lang/hr/).
 
 ---
 
+## [2.0.0-fix1] — 2026-06-28
+
+### Korekcija strukture paketa (fix1)
+
+#### Izmijenjeno
+
+- **Struktura ZIP paketa** — uklonjene `web/` i `root/` omotne mape koje su mogle dovesti do
+  pogrešnih instalacijskih putanja (npr. `/public_html/web/scanner/` ili `/root/root/8core_scanner/`)
+- **`web/scanner/`** preimenovano u **`scanner/`** — sadržaj se kopira direktno u `WEB_APP_PATH`
+- **`root/8core_scanner/`** preimenovano u **`8core_scanner/`** — sadržaj se kopira direktno u `ROOT_ENGINE_PATH`
+- **`scanner/assets/img/`** — dodana mapa za buduće slike (logo, ikone, UI elementi); za sada prazna s `.gitkeep`
+- **`README.md`** — ažurirana struktura, napomena o razlici između ZIP mapa i instalacijskih putanja,
+  proširene instalacijske upute s primjerima ispravnih i neispravnih putanja
+
+#### Nije izmijenjeno
+
+- Sva poslovna logika web panela i bash enginea
+- Sve relativne putanje u PHP kodu (već ispravne, ne ovise o ZIP strukturi)
+- Verzija ostaje **2.0.0** (ovo je korekcija pakiranja, ne novi release)
+
+---
+
 ## [2.0.0] — 2026-06-28
 
 ### Reorganizacija arhitekture (V2.0 paket)
@@ -15,8 +37,8 @@ reorganizaciji strukture projekta radi čišće osnove za daljnji razvoj.
 
 #### Dodano
 
-- **Struktura paketa `8core-scanner-v2/`** s jasnom podjelom na `web/` i `root/`
-- **Installer** (`web/scanner/install/index.php`) — korak-po-korak instalacija s:
+- **Struktura paketa `8core-scanner-v2/`** s jasnom podjelom na `scanner/` i `8core_scanner/`
+- **Installer** (`scanner/install/index.php`) — korak-po-korak instalacija s:
   - Provjerom PHP okruženja (verzija, ekstenzije, dozvole)
   - Unosom DB podataka i testom konekcije
   - Podesivim putanjama: `WEB_APP_PATH`, `WEB_APP_URL`, `ROOT_ENGINE_PATH`, `QUARANTINE_PATH`, `LOG_PATH`
@@ -31,14 +53,14 @@ reorganizaciji strukture projekta radi čišće osnove za daljnji razvoj.
 - **`install/templates/config.sample.php`** — predložak PHP konfiguracije
 - **`install/templates/scanner-db.sample.conf`** — predložak bash DB konfiguracije
 - **`includes/config.sample.php`** — predložak koji zamjenjuje stvarni `config.php` u paketu
-- **`root/8core_scanner/scanner-db.conf.sample`** — predložak koji zamjenjuje stvarni `scanner-db.conf`
-- **`root/8core_scanner/logs/.gitkeep`** — prazni placeholder za log direktorij
-- **`root/8core_scanner/quarantine/.gitkeep`** — prazni placeholder za karantena direktorij
-- **`root/8core_scanner/bin/.gitkeep`** — rezerviran za buduće binarne skripte
-- **`root/8core_scanner/lib/.gitkeep`** — rezerviran za buduće biblioteke
-- **`root/8core_scanner/modules/.gitkeep`** — rezerviran za buduće module
-- **`root/8core_scanner/rules/.gitkeep`** — rezerviran za buduća pravila u fajlovima
-- **`root/8core_scanner/migrations/.gitkeep`** — rezerviran za buduće DB migracije
+- **`8core_scanner/scanner-db.conf.sample`** — predložak koji zamjenjuje stvarni `scanner-db.conf`
+- **`8core_scanner/logs/.gitkeep`** — prazni placeholder za log direktorij
+- **`8core_scanner/quarantine/.gitkeep`** — prazni placeholder za karantena direktorij
+- **`8core_scanner/bin/.gitkeep`** — rezerviran za buduće binarne skripte
+- **`8core_scanner/lib/.gitkeep`** — rezerviran za buduće biblioteke
+- **`8core_scanner/modules/.gitkeep`** — rezerviran za buduće module
+- **`8core_scanner/rules/.gitkeep`** — rezerviran za buduća pravila u fajlovima
+- **`8core_scanner/migrations/.gitkeep`** — rezerviran za buduće DB migracije
 - **`README.md`** — dokumentacija strukture, instalacije i konfiguracije (na hrvatskom)
 - **`changelog.md`** — ovaj fajl
 
@@ -47,7 +69,7 @@ reorganizaciji strukture projekta radi čišće osnove za daljnji razvoj.
 - **`includes/db.php`** — dodana automatska preusmjeravanja na installer ako `config.php` ne postoji
 - **`includes/auth.php`** — prilagođene `require_login()` / `require_admin()` putanje za rad na proizvoljnoj dubini
 - **`ioc_scan.sh`** (v3.1 → v3.2) — putanje (`CONFIG`, `RUN_LOG`) sada se detektiraju relativno prema lokaciji skripte uz podršku za `--config=` argument; log se sprema u `LOG_PATH` iz konfiguracije
-- **`scanner_worker.sh`** (v1.2 → v1.3) — putanje (`CONFIG`, `SCANNER`, `LOG`, `QUARANTINE_BASE`) sada se detektiraju relativno prema lokaciji skripte; podršku za `LOG_PATH` i `QUARANTINE_PATH` iz konfiguracije; prosljeđuje `--config=` argument scanneru
+- **`scanner_worker.sh`** (v1.2 → v1.3) — putanje (`CONFIG`, `SCANNER`, `LOG`, `QUARANTINE_BASE`) sada se detektiraju relativno prema lokaciji skripte; podrška za `LOG_PATH` i `QUARANTINE_PATH` iz konfiguracije; prosljeđuje `--config=` argument scanneru
 - **`index.php`** — ažuriran link za migrate na `install/migrate.php`; verzija u sidebaru: `v2.0`
 - **`login.php`** — ažurirana verzija u naslovu: `v2.0`
 - **`scan.php`** — ažurirana verzija u sidebaru: `v2.0`

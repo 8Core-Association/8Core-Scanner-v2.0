@@ -6,6 +6,51 @@ Verzioniranje slijedi [Semantic Versioning](https://semver.org/lang/hr/).
 
 ---
 
+## [2.0.1] — 2026-06-28
+
+### Added
+
+- **`scanner/admin/update.php`** — Admin Update stranica:
+  - Upload ZIP paketa, dry-run prikaz, apply web update
+  - Preskače `includes/config.php` i `install/install.lock` (nikad se ne prepisuju)
+  - Sekcija B: DB migracije — prikaz pending/primjenjeno, gumb za primjenu
+  - Sekcija C: Root engine update skripta (textarea za kopiranje, ne izvršava web)
+  - Backup root enginea u `ROOT_ENGINE_PATH_backup_YYYYMMDD_HHMMSS` prije kopiranja
+  - ZIP validacija: provjera ekstenzije, path traversal zaštita, strukturna provjera
+- **`scanner/admin/about.php`** — O scanneru:
+  - Verzije (paket, instalirana), okruženje (PHP, hostname, web path, install.lock)
+  - Konfigurirane putanje (root_engine_path, quarantine_path, scan_log)
+  - Cron hint s ispravnim putanjama
+  - Health Check: config.php, install.lock, DB konekcija, sve potrebne tablice, putanje
+- **`scanner/admin/changelog.php`** — Prikaz changelog.md iz root paketa
+  - Minimalni Markdown → HTML renderer (headings, liste, code, bold)
+  - Fallback poruka ako fajl nije pronađen
+- **`scanner/admin/sidebar.php`** — Dodane stavke: Update, Changelog, O scanneru
+- **`scanner/VERSION`** — verzija paketa (`2.0.1`)
+- **`scanner/install/migrations/20260628_001_add_migrations_and_settings.sql`**:
+  - `scanner_migrations` tablica (tracking primjenjenih migracija)
+  - `scanner_settings` tablica (installed_version, installed_at, last_updated_at)
+- **`scanner/install/migrations/20260628_002_add_rule_key.sql`**:
+  - `rule_key` kolona u `scanner_rules` (hash za deduplikaciju pri importu)
+  - `imported_from` kolona
+  - Popunjava `rule_key` za postojeće retke
+
+### Changed
+
+- Update proces čuva sve korisničke podatke (users, findings, rules, ignore list, config, quarantine, logs, cron)
+- Web update preskače zaštićene fajlove, ne briše ništa
+- Root engine update kreira backup prije kopiranja
+
+### Security
+
+- Update ne prepisuje `scanner-db.conf`, `config.php`, `install/install.lock`
+- Update ne traži root lozinku kroz web formu
+- Root update skripta se samo generira — web je ne izvršava
+- ZIP upload: provjera ekstenzije, path traversal filter, strukturna validacija
+- Temp direktorij se briše nakon primjene
+
+---
+
 ## [2.0.0-fix5] — 2026-06-28
 
 ### Usklađivanje QUARANTINE_BASE_PATH i isključivanje iz scanova (fix5)

@@ -1,0 +1,51 @@
+[2026-06-27 17:11:00] 8Core IOC Scanner v3.1 started
+[2026-06-27 17:11:00] Base: /home/rocketdb/crm.rocketdbs.com
+[2026-06-27 17:11:00] Target type: custom_path
+[2026-06-27 17:11:00] Target value: /home/rocketdb/crm.rocketdbs.com
+[2026-06-27 17:11:00] Database: 8core5_scanner@localhost
+[2026-06-27 17:11:00] Scan ID: 5
+[2026-06-27 17:11:00] Scanning: filefuns.php [CRITICAL]
+[2026-06-27 17:11:00] Scanning: .sys-* files [HIGH]
+[2026-06-27 17:11:00] Scanning: adman marker txt [HIGH]
+[2026-06-27 17:11:00] Scanning: mixed-case PHP extensions [MEDIUM]
+[2026-06-27 17:11:00] Scanning: tmp executable web files [HIGH]
+[2026-06-27 17:11:00] Scanning: suspicious random index.php dirs [HIGH]
+[2026-06-27 17:11:00] Scanning: cache.php suspicious locations [MEDIUM]
+[2026-06-27 17:11:00] Scanning: known command shell indicators [HIGH]
+[2026-06-27 17:11:01] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/classes/Portal/apis/DownloadFile.php
+[2026-06-27 17:11:01] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/classes/Vtiger/connectors/Portal.php
+[2026-06-27 17:11:02] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/benchmarks/ConfigSchema.php
+[2026-06-27 17:11:03] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/library/HTMLPurifier/ConfigSchema/InterchangeBuilder.php
+[2026-06-27 17:11:04] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/library/HTMLPurifier/VarParser/Native.php
+[2026-06-27 17:11:04] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/maintenance/flush.php
+[2026-06-27 17:11:05] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/maintenance/generate-ph5p-patch.php
+[2026-06-27 17:11:05] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/maintenance/generate-standalone.php
+[2026-06-27 17:11:05] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/plugins/phorum/htmlpurifier.php
+[2026-06-27 17:11:06] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/tests/HTMLPurifier/HTMLT.php
+[2026-06-27 17:11:06] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/tests/CliTestCase.php
+[2026-06-27 17:11:07] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/release1-update.php
+[2026-06-27 17:11:07] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/include/htmlpurify/release2-tag.php
+[2026-06-27 17:11:08] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/plugins/shared.literal_compiler_param.php
+[2026-06-27 17:11:08] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/plugins/function.mailto.php
+[2026-06-27 17:11:09] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/plugins/function.math.php
+[2026-06-27 17:11:09] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_cacheresource_custom.php
+[2026-06-27 17:11:09] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_cacheresource_keyvaluestore.php
+[2026-06-27 17:11:10] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_function_call_handler.php
+[2026-06-27 17:11:10] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_resource_string.php
+[2026-06-27 17:11:10] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_compile_extends.php
+[2026-06-27 17:11:10] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_template.php
+[2026-06-27 17:11:11] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_templatebase.php
+[2026-06-27 17:11:11] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_compile_include.php
+[2026-06-27 17:11:11] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_compile_include_php.php
+[2026-06-27 17:11:12] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_compile_insert.php
+[2026-06-27 17:11:12] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/sysplugins/smarty_internal_resource_eval.php
+[2026-06-27 17:11:13] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/Smarty/libs/SmartyBC.class.php
+[2026-06-27 17:11:13] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/libraries/nusoap/lib/nusoap.php
+[2026-06-27 17:11:13] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/vtlib/thirdparty/network/PEAR.php
+[2026-06-27 17:11:14] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/vtlib/thirdparty/network/Request.php
+[2026-06-27 17:11:14] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/customerportal/vtlib/thirdparty/dUnzip2.inc.php
+[2026-06-27 17:11:14] FOUND [HIGH] known command shell indicators :: /home/rocketdb/crm.rocketdbs.com/soap/customerportal.php
+[2026-06-27 17:11:14] 8Core IOC Scanner finished
+[2026-06-27 17:11:14] Scan ID: 5
+[2026-06-27 17:11:14] Findings: 33
+[2026-06-27 17:11:14] Tail: tail -f /root/ioc-scan-live.log

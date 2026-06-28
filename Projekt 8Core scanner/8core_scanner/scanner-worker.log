@@ -1,0 +1,44 @@
+[2026-06-27 14:08:39] Processing request ID=1 TYPE=account TARGET=buckhr
+[2026-06-27 14:08:39] Request finished ID=1
+[2026-06-27 15:20:31] Action request ID=158 STATUS=delete_requested FILE=/home/rocketdb/public_html/story/tmp/akstorage_backend.id-20220521-120540-372411.php
+[2026-06-27 15:20:31] Delete failed ID=158 FILE=/home/rocketdb/public_html/story/tmp/akstorage_backend.id-20220521-120540-372411.php
+[2026-06-27 15:20:31] Action request ID=214 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/backuply/backups-YDB8vQ/tmp/index.php
+[2026-06-27 15:20:31] Quarantined ID=214 TO=/root/quarantine/vinorahr/214_20260627-152031_index.php
+[2026-06-27 15:20:31] Action request ID=238 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/backuply/backups-YDB8vQ/tmp/index.php
+[2026-06-27 15:20:31] Action failed ID=238 file not found
+[2026-06-27 15:20:31] Action request ID=239 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/sitepress-multilingual-cms/inc/cache.php
+[2026-06-27 15:20:31] Quarantined ID=239 TO=/root/quarantine/vinorahr/239_20260627-152031_cache.php
+[2026-06-27 15:20:31] Action request ID=240 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-includes/cache.php
+[2026-06-27 15:20:31] Quarantined ID=240 TO=/root/quarantine/vinorahr/240_20260627-152031_cache.php
+[2026-06-27 15:20:31] Action request ID=241 STATUS=quarantine_requested FILE=/home/vinorahr/majetic-vina.com/wp-includes/cache.php
+[2026-06-27 15:20:31] Quarantined ID=241 TO=/root/quarantine/vinorahr/241_20260627-152031_cache.php
+[2026-06-27 15:20:31] Action request ID=242 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-admin/includes/class-pclzip.php
+[2026-06-27 15:20:31] Quarantined ID=242 TO=/root/quarantine/vinorahr/242_20260627-152031_class-pclzip.php
+[2026-06-27 15:20:31] Action request ID=243 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-admin/includes/file.php
+[2026-06-27 15:20:31] Quarantined ID=243 TO=/root/quarantine/vinorahr/243_20260627-152031_file.php
+[2026-06-27 15:20:31] Action request ID=244 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/backuply-pro/lib/phpseclib/Crypt/Base.php
+[2026-06-27 15:20:31] Quarantined ID=244 TO=/root/quarantine/vinorahr/244_20260627-152031_Base.php
+[2026-06-27 15:20:31] Action request ID=245 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/backuply-pro/lib/phpseclib/Crypt/RSA.php
+[2026-06-27 15:20:31] Quarantined ID=245 TO=/root/quarantine/vinorahr/245_20260627-152031_RSA.php
+[2026-06-27 15:20:31] Action request ID=246 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/backuply-pro/lib/phpseclib/File/ASN1.php
+[2026-06-27 15:20:31] Quarantined ID=246 TO=/root/quarantine/vinorahr/246_20260627-152031_ASN1.php
+[2026-06-27 15:20:31] Action request ID=247 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/backuply-pro/lib/phpseclib/File/X509.php
+[2026-06-27 15:20:31] Quarantined ID=247 TO=/root/quarantine/vinorahr/247_20260627-152031_X509.php
+[2026-06-27 15:20:31] Action request ID=248 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/backuply-pro/lib/phpseclib/Net/SSH2.php
+[2026-06-27 15:20:31] Quarantined ID=248 TO=/root/quarantine/vinorahr/248_20260627-152031_SSH2.php
+[2026-06-27 15:20:31] Action request ID=249 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack-lite/includes/twitteroauth/OAuth.php
+[2026-06-27 15:20:31] Quarantined ID=249 TO=/root/quarantine/vinorahr/249_20260627-152031_OAuth.php
+[2026-06-27 15:20:31] Action request ID=250 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack/includes/twitteroauth/OAuth.php
+[2026-06-27 15:20:32] Quarantined ID=250 TO=/root/quarantine/vinorahr/250_20260627-152031_OAuth.php
+[2026-06-27 15:20:32] Action request ID=251 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack/modules/user-login/vendor/firebase/php-jwt/src/JWT.php
+[2026-06-27 15:20:32] Quarantined ID=251 TO=/root/quarantine/vinorahr/251_20260627-152032_JWT.php
+[2026-06-27 15:20:32] Action request ID=252 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack/modules/user-login/vendor/google/apiclient/src/Google/Client.php
+[2026-06-27 15:20:32] Quarantined ID=252 TO=/root/quarantine/vinorahr/252_20260627-152032_Client.php
+[2026-06-27 15:20:32] Action request ID=253 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack/modules/user-login/vendor/monolog/monolog/src/Monolog/Handler/DeduplicationHandler.php
+[2026-06-27 15:20:32] Quarantined ID=253 TO=/root/quarantine/vinorahr/253_20260627-152032_DeduplicationHandler.php
+[2026-06-27 15:20:32] Action request ID=254 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack/modules/user-login/vendor/monolog/monolog/src/Monolog/Handler/FingersCrossedHandler.php
+[2026-06-27 15:20:32] Quarantined ID=254 TO=/root/quarantine/vinorahr/254_20260627-152032_FingersCrossedHandler.php
+[2026-06-27 15:20:32] Action request ID=255 STATUS=quarantine_requested FILE=/home/vinorahr/public_html/wp-content/plugins/bdthemes-element-pack/modules/user-login/vendor/phpseclib/phpseclib/phpseclib/Crypt/Base.php
+[2026-06-27 15:20:32] Quarantined ID=255 TO=/root/quarantine/vinorahr/255_20260627-152032_Base.php
+[2026-06-27 15:20:32] Processing scan request ID=3 TYPE=account TARGET=confiden
+[2026-06-27 15:21:14] Scan request finished ID=3

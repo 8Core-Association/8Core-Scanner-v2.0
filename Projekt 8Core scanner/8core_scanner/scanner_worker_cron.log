@@ -1,0 +1,19 @@
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+flock: failed to execute /root/scanner_worker.sh: No such file or directory
+flock: failed to execute /root/scanner_worker.sh: Permission denied
+/root/scanner_worker.sh: line 15: log: command not found
+/root/scanner_worker.sh: line 15: log: command not found

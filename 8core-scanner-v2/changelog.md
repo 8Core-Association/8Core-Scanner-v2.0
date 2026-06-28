@@ -6,6 +6,50 @@ Verzioniranje slijedi [Semantic Versioning](https://semver.org/lang/hr/).
 
 ---
 
+## [2.0.0-fix3] — 2026-06-28
+
+### Dodavanje root engine install koraka u installer (fix3)
+
+#### Dodano
+
+- **`install/index.php`** — novi završni korak "Root engine instalacija" (korak 3):
+  - Polje `ENGINE_SOURCE_PATH` — putanja do raspakirane mape `8core_scanner/` iz ZIP paketa
+  - Validacija `ENGINE_SOURCE_PATH`: upozorenje ako `ioc_scan.sh` ili `scanner_worker.sh` nisu pronađeni (ne blokira instalaciju web dijela)
+  - **Generiranje root install skripte** — prikazuje se u `<textarea>` za kopiranje, ne sprema se javno na disk
+  - Gumb "Kopiraj script" (Clipboard API + fallback)
+  - Provjera izvorne mape u skripti (`set -e`, bail na missing files)
+  - Automatsko kreiranje `ROOT_ENGINE_PATH`, `LOG_PATH`, `QUARANTINE_PATH`
+  - Kopiranje engine fajlova (`cp -a`)
+  - Generiranje `scanner-db.conf` putem bash heredoc s nepromjenjivim delimiterom (`_8CORE_CONF_END_`)
+  - Postavljanje vlasništva `root:root` i permisija (`700`/`600`/`+x`)
+  - Sintaktička provjera skripti u završnoj fazi (`bash -n`)
+  - Prikaz cron primjera s stvarnim putanjama
+  - Checklist koraka za provjeru nakon instalacije
+  - Sigurnosna preporuka za brisanje/preimenovanje mape `install/` s primjerom naredbi
+- **`install/index.php`** — poboljšana poruka za zaključani installer (`install.lock`):
+  - Prikazuje sigurnosnu preporuku za brisanje mape `install/`
+- **`sh_quote()`** — nova PHP funkcija za shell-safe single-quote escaping bash vrijednosti
+- **`generateRootInstallScript()`** — generira kompletnu bash skriptu s DB podacima i putanjama
+
+#### Izmijenjeno
+
+- **`install/index.php`** — uklonjen `file_put_contents` za `generated-scanner-db.conf`
+  (DB podaci više nisu zapisani u web-dostupan fajl — sadržaj je samo u textarea skripte)
+- **`README.md`** — ažuriran korak instalacije root enginea:
+  - Opis root install skripte i toka (root lozinka se ne unosi kroz browser)
+  - Sekcija za sigurnost mape `install/` (korak 6)
+  - Sigurnosna sekcija proširena: install.lock, preporuka brisanja install/, nema root lozinke kroz PHP
+
+#### Sigurnost
+
+- Root lozinka se ne traži, ne prima, ne sprema niti prosljeđuje kroz web formu
+- DB lozinka u root install skripti koristi shell-safe single-quote escaping
+- Root install script se prikazuje u textarea i ne sprema se na disk kao javno dostupan fajl
+- `install.lock` blokira ponovni pristup installeru (HTTP 403)
+- Preporuka za brisanje mape `install/` nakon instalacije dokumentirana i prikazana u UI
+
+---
+
 ## [2.0.0-fix2] — 2026-06-28
 
 ### Ispravak instalacijske logike i dokumentacije putanja (fix2)

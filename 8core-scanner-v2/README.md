@@ -146,17 +146,51 @@ Installer automatski detektira `WEB_APP_PATH` iz vlastite lokacije na serveru.
 
 Installer će:
 1. Provjeriti PHP okruženje (verzija, ekstenzije, dozvole)
-2. Zatražiti DB podatke i putanje (`WEB_APP_PATH`, `WEB_APP_URL`, `ROOT_ENGINE_PATH`, `QUARANTINE_PATH`, `LOG_PATH`)
+2. Zatražiti DB podatke i putanje (`WEB_APP_PATH`, `WEB_APP_URL`, `ENGINE_SOURCE_PATH`, `ROOT_ENGINE_PATH`, `QUARANTINE_PATH`, `LOG_PATH`)
 3. Kreirati sve potrebne tablice u bazi
 4. Generirati `includes/config.php`
-5. Generirati `install/generated-scanner-db.conf` (za root engine)
-6. Zaključati se (`install/install.lock`)
+5. Zaključati se (`install/install.lock`)
+6. Generirati **root install skriptu** (prikazuje se u textarea za kopiranje)
 
 ---
 
-### Korak 4 — Instalacija root enginea
+---
 
-Kopirati **sadržaj** mape `8core_scanner/` u odabrani `ROOT_ENGINE_PATH`:
+### Korak 4 — Instalacija root enginea (putem root install skripte)
+
+Web installer **ne može pisati u root direktorije niti traži root lozinku**.
+Umjesto toga, na kraju instalacije prikazuje generiranu bash skriptu u textarea.
+
+**Root lozinka se ne unosi kroz browser.**
+
+Tok:
+
+1. Na kraju instalacije (korak 3 installera) kliknuti **"Kopiraj script"**
+2. Zalijepiti u root terminal ili sačuvati kao fajl
+3. Pokrenuti kao root:
+
+```bash
+chmod +x /root/install_8core_scanner.sh
+bash /root/install_8core_scanner.sh
+```
+
+Što root install script radi:
+- Provjerava postoji li `ENGINE_SOURCE_PATH/ioc_scan.sh`
+- Kreira `ROOT_ENGINE_PATH`, `LOG_PATH`, `QUARANTINE_PATH`
+- Kopira engine fajlove (`cp -a`)
+- Kreira `scanner-db.conf` s DB podacima (shell-safe escaping)
+- Postavlja vlasništvo `root:root` i permisije (`700`, `600`)
+- Označava `ioc_scan.sh` i `scanner_worker.sh` kao executable
+- Ispisuje cron primjer
+
+**ENGINE_SOURCE_PATH** unositi u installer — to je putanja do raspakirane mape `8core_scanner/` iz ZIP paketa:
+
+```
+/root/8core-scanner-install/8core-scanner-v2/8core_scanner
+```
+
+**ROOT_ENGINE_PATH** je gdje će engine biti instaliran (default: `/root/8core_scanner`).
+Administrator bira stvarnu putanju — nije hardkodirano.
 
 ```bash
 mkdir -p /root/8core_scanner
@@ -166,7 +200,7 @@ chmod +x /root/8core_scanner/ioc_scan.sh /root/8core_scanner/scanner_worker.sh
 chmod 700 /root/8core_scanner/quarantine
 ```
 
-**Važno:** Kopira se SADRŽAJ mape `8core_scanner/`, ne sama mapa.
+**Napomena:** Ako si koristio root install script iz installera, ovaj korak je već obavljen automatski.
 
 Nakon kopiranja mora nastati:
 
@@ -191,23 +225,7 @@ Ne smije nastati:
 
 ---
 
-### Korak 5 — Konfiguracija root enginea
-
-Kopirati generiranu konfiguraciju iz installera u root engine:
-
-```bash
-# Putanja do generirane konfig datoteke iz installera:
-cp /home/account/public_html/scanner/install/generated-scanner-db.conf \
-   /root/8core_scanner/scanner-db.conf
-chmod 600 /root/8core_scanner/scanner-db.conf
-```
-
-`ROOT_ENGINE_PATH` je samo default prijedlog (`/root/8core_scanner`).
-Administrator bira stvarnu putanju pri instalaciji — installer prihvaća bilo koju putanju.
-
----
-
-### Korak 6 — Postavljanje cron joba
+### Korak 5 — Postavljanje cron joba
 
 ```bash
 # Kao root (crontab -e):
@@ -217,6 +235,22 @@ Administrator bira stvarnu putanju pri instalaciji — installer prihvaća bilo 
 Zamijeniti `/root/8core_scanner/` sa stvarnom `ROOT_ENGINE_PATH` ako je drugačija.
 
 ---
+
+### Korak 6 — Sigurnost mape install/
+
+Nakon provjere rada sustava obrisati ili preimenovati mapu `install/`:
+
+```bash
+# Brisanje (preporučeno):
+rm -rf /home/account/public_html/scanner/install/
+
+# Ili preimenovanje:
+mv /home/account/public_html/scanner/install/ \
+   /home/account/public_html/scanner/install_disabled/
+```
+
+Mapa je zaštićena putem `install.lock` (blocked 403), ali brisanje eliminira površinu napada.
+Za buduće nadogradnje sheme baze koristiti `install/migrate.php` (zahtijeva admin prijavu).
 
 ### Korak 7 — Čišćenje
 
@@ -265,9 +299,11 @@ Generira installer. Ključne vrijednosti:
 
 - `includes/config.php` — NE commitati, NE javno dostupan
 - `scanner-db.conf` — `chmod 600`, vlasnik root, **van web roota**
-- `install/install.lock` — nastaje nakon instalacije, blokira reinstalaciju
+- `install/install.lock` — nastaje nakon instalacije, blokira reinstalaciju (403)
+- `install/` mapa — preporučuje se brisanje ili preimenovanje nakon instalacije
 - Root engine mora biti van web roota bez iznimke
 - Web panel ne može direktno izvršavati root naredbe
+- Root lozinka se ne unosi kroz browser niti PHP formu
 - `8core-scanner-v2/` paketna mapa ukloniti nakon instalacije
 
 ---

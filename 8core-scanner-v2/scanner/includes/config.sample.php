@@ -30,5 +30,8 @@ return [
     'scan_script'      => '/root/8core_scanner/ioc_scan.sh',
     'scan_log'         => '/root/8core_scanner/logs/ioc-scan-live.log',
     'scan_debug'       => '/root/8core_scanner/logs/ioc-debug.log',
-    'quarantine_path'  => '/root/8core_scanner/quarantine',
+
+    // QUARANTINE_BASE_PATH — NE mora biti unutar ROOT_ENGINE_PATH
+    // NE smije biti unutar public_html ili bilo kojeg web-dostupnog direktorija
+    'quarantine_path'  => '/home/8core_quarantine',
 ];

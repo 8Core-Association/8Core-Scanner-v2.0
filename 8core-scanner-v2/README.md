@@ -146,7 +146,7 @@ Installer automatski detektira `WEB_APP_PATH` iz vlastite lokacije na serveru.
 
 Installer će:
 1. Provjeriti PHP okruženje (verzija, ekstenzije, dozvole)
-2. Zatražiti DB podatke i putanje (`WEB_APP_PATH`, `WEB_APP_URL`, `ENGINE_SOURCE_PATH`, `ROOT_ENGINE_PATH`, `QUARANTINE_PATH`, `LOG_PATH`)
+2. Zatražiti DB podatke i putanje (`WEB_APP_PATH`, `WEB_APP_URL`, `ENGINE_SOURCE_PATH`, `ROOT_ENGINE_PATH`, `QUARANTINE_BASE_PATH`, `LOG_PATH`)
 3. Kreirati sve potrebne tablice u bazi
 4. Generirati `includes/config.php`
 5. Zaključati se (`install/install.lock`)
@@ -176,7 +176,7 @@ bash /root/install_8core_scanner.sh
 
 Što root install script radi:
 - Provjerava postoji li `ENGINE_SOURCE_PATH/ioc_scan.sh`
-- Kreira `ROOT_ENGINE_PATH`, `LOG_PATH`, `QUARANTINE_PATH`
+- Kreira `ROOT_ENGINE_PATH`, `LOG_PATH`, `QUARANTINE_BASE_PATH`
 - Kopira engine fajlove (`cp -a`)
 - Kreira `scanner-db.conf` s DB podacima (shell-safe escaping)
 - Postavlja vlasništvo `root:root` i permisije (`700`, `600`)
@@ -192,12 +192,25 @@ bash /root/install_8core_scanner.sh
 **ROOT_ENGINE_PATH** je gdje će engine biti instaliran (default: `/root/8core_scanner`).
 Administrator bira stvarnu putanju — nije hardkodirano.
 
+**QUARANTINE_BASE_PATH** je odvojena putanja za karantenu — **ne mora biti unutar ROOT_ENGINE_PATH**.
+Default prijedlog: `/home/8core_quarantine`
+Alternativa: `/root/8core_scanner/quarantine` ili bilo koja druga putanja van web roota.
+
+Pravila za QUARANTINE_BASE_PATH:
+- Mora biti apsolutna putanja
+- Ne smije biti unutar `public_html` ili bilo kojeg web-dostupnog direktorija
+- Vlasnik: `root:root`, permisije: `700`
+- Scanner mora isključiti tu putanju iz budućih scanova
+
 ```bash
 mkdir -p /root/8core_scanner
 rsync -av /root/8core-scanner-install/8core-scanner-v2/8core_scanner/ /root/8core_scanner/
 chown -R root:root /root/8core_scanner
 chmod +x /root/8core_scanner/ioc_scan.sh /root/8core_scanner/scanner_worker.sh
-chmod 700 /root/8core_scanner/quarantine
+# Karantena je odvojena od root engine putanje:
+mkdir -p /home/8core_quarantine
+chown root:root /home/8core_quarantine
+chmod 700 /home/8core_quarantine
 ```
 
 **Napomena:** Ako si koristio root install script iz installera, ovaj korak je već obavljen automatski.
@@ -209,7 +222,8 @@ Nakon kopiranja mora nastati:
 /root/8core_scanner/scanner_worker.sh
 /root/8core_scanner/scanner-db.conf.sample
 /root/8core_scanner/logs/
-/root/8core_scanner/quarantine/
+# Karantena se kreira odvojeno (QUARANTINE_BASE_PATH):
+/home/8core_quarantine/
 ```
 
 Ne smije nastati:
@@ -277,7 +291,7 @@ Generira installer. Ključne vrijednosti:
 | `root_engine_path` | Putanja root enginea                      |
 | `scan_script`      | Putanja do `ioc_scan.sh`                  |
 | `scan_log`         | Putanja do live log fajla                 |
-| `quarantine_path`  | Putanja do karantena direktorija          |
+| `quarantine_path`  | Putanja karantene (QUARANTINE_BASE_PATH)  |
 
 ### Root konfiguracija (`scanner-db.conf`)
 
@@ -289,9 +303,9 @@ Generira installer. Ključne vrijednosti:
 | `DB_NAME`          | Naziv baze                                |
 | `DB_USER`          | Korisnik baze                             |
 | `DB_PASS`          | Lozinka baze                              |
-| `ROOT_ENGINE_PATH` | Putanja root enginea                      |
-| `QUARANTINE_PATH`  | Putanja karantena                         |
-| `LOG_PATH`         | Putanja log direktorija                   |
+| `ROOT_ENGINE_PATH`      | Putanja root enginea                      |
+| `QUARANTINE_BASE_PATH`  | Putanja karantene (odvojena od engine)    |
+| `LOG_PATH`              | Putanja log direktorija                   |
 
 ---
 

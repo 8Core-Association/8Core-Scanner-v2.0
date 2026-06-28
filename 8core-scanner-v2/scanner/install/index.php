@@ -68,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $step === 2) {
     $dbCharset        = trim($_POST['db_charset']         ?? 'utf8mb4');
     $webAppPath       = trim($_POST['web_app_path']       ?? $detectedWebPath);
     $webAppUrl        = rtrim(trim($_POST['web_app_url']  ?? $detectedWebUrl), '/');
-    $rootEngPath      = trim($_POST['root_eng_path']      ?? '/root/8core_scanner');
-    $quarPath         = trim($_POST['quarantine_path']    ?? '/root/8core_scanner/quarantine');
-    $logPath          = trim($_POST['log_path']           ?? '/root/8core_scanner/logs');
+    $rootEngPath      = trim($_POST['root_eng_path']         ?? '/root/8core_scanner');
+    $quarPath         = trim($_POST['quarantine_base_path']  ?? '/home/8core_quarantine');
+    $logPath          = trim($_POST['log_path']              ?? '/root/8core_scanner/logs');
     $engineSourcePath = trim($_POST['engine_source_path'] ?? '');
     $adminUser        = trim($_POST['admin_user']         ?? 'admin');
     $adminPass        = $_POST['admin_pass']              ?? '';
@@ -224,7 +224,7 @@ function generateRootInstallScript(
         . '# Putanje' . $nl
         . 'ENGINE_SOURCE=' . $q_src  . $nl
         . 'ROOT_ENGINE_PATH=' . $q_dst  . $nl
-        . 'QUARANTINE_PATH=' . $q_quar . $nl
+        . 'QUARANTINE_BASE_PATH=' . $q_quar . $nl
         . 'LOG_PATH=' . $q_log  . $nl
         . $nl
         . '# ─── Provjera izvorne mape ────────────────────────────────────────' . $nl
@@ -239,9 +239,8 @@ function generateRootInstallScript(
         . 'echo "Kreiranje direktorija..."' . $nl
         . 'mkdir -p "$ROOT_ENGINE_PATH"' . $nl
         . 'mkdir -p "$LOG_PATH"' . $nl
-        . 'mkdir -p "$QUARANTINE_PATH"' . $nl
-        . $nl
-        . '# ─── Kopiranje engine fajlova ────────────────────────────────────' . $nl
+        . 'echo "Kreiranje QUARANTINE_BASE_PATH (van public_html i web roota)..."' . $nl
+        . 'mkdir -p "$QUARANTINE_BASE_PATH"' . $nl
         . 'echo "Kopiranje engine fajlova..."' . $nl
         . 'cp -a "$ENGINE_SOURCE/." "$ROOT_ENGINE_PATH/"' . $nl
         . $nl
@@ -259,7 +258,7 @@ function generateRootInstallScript(
         . 'DB_CHARSET=' . $c_charset . $nl
         . $nl
         . 'ROOT_ENGINE_PATH=' . $c_dst  . $nl
-        . 'QUARANTINE_PATH=' . $c_quar . $nl
+        . 'QUARANTINE_BASE_PATH=' . $c_quar . $nl
         . 'LOG_PATH=' . $c_log  . $nl
         . '_8CORE_CONF_END_' . $nl
         . $nl
@@ -268,7 +267,8 @@ function generateRootInstallScript(
         . 'chown -R root:root "$ROOT_ENGINE_PATH"' . $nl
         . 'chmod 700 "$ROOT_ENGINE_PATH"' . $nl
         . 'chmod 700 "$LOG_PATH"' . $nl
-        . 'chmod 700 "$QUARANTINE_PATH"' . $nl
+        . 'chown root:root "$QUARANTINE_BASE_PATH"' . $nl
+        . 'chmod 700 "$QUARANTINE_BASE_PATH"' . $nl
         . 'chmod 600 "$ROOT_ENGINE_PATH/scanner-db.conf"' . $nl
         . 'chmod +x  "$ROOT_ENGINE_PATH/ioc_scan.sh"' . $nl
         . 'chmod +x  "$ROOT_ENGINE_PATH/scanner_worker.sh"' . $nl
@@ -429,6 +429,7 @@ bash /root/install_8core_scanner.sh</div>
       <ul class="checklist">
         <li><code>ls -lah <?= htmlspecialchars($rootEngPath, ENT_QUOTES, 'UTF-8') ?></code></li>
         <li><code>stat <?= htmlspecialchars($rootEngPath, ENT_QUOTES, 'UTF-8') ?>/scanner-db.conf</code> — mora biti chmod 600</li>
+        <li><code>stat <?= htmlspecialchars($quarPath, ENT_QUOTES, 'UTF-8') ?></code> — karantena mora biti chmod 700, vlasnik root</li>
         <li><code>bash -n <?= htmlspecialchars($rootEngPath, ENT_QUOTES, 'UTF-8') ?>/ioc_scan.sh</code></li>
         <li><code>bash -n <?= htmlspecialchars($rootEngPath, ENT_QUOTES, 'UTF-8') ?>/scanner_worker.sh</code></li>
         <li>Dodaj cron i provjeri log nakon minute</li>
@@ -511,8 +512,9 @@ mv <?= htmlspecialchars(rtrim($detectedWebPath, '/'), ENT_QUOTES, 'UTF-8') ?>/in
         </div>
         <div class="field-row">
           <div class="field">
-            <label>Karantena (QUARANTINE_PATH)</label>
-            <input type="text" name="quarantine_path" value="<?= htmlspecialchars($_POST['quarantine_path'] ?? '/root/8core_scanner/quarantine', ENT_QUOTES) ?>">
+            <label>Karantena (QUARANTINE_BASE_PATH)</label>
+            <input type="text" name="quarantine_base_path" value="<?= htmlspecialchars($_POST['quarantine_base_path'] ?? '/home/8core_quarantine', ENT_QUOTES) ?>">
+            <div class="hint">Van public_html i van web roota. Ne mora biti unutar ROOT_ENGINE_PATH. Default: /home/8core_quarantine</div>
           </div>
           <div class="field">
             <label>Logovi (LOG_PATH)</label>

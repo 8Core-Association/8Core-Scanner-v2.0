@@ -20,5 +20,5 @@ DB_CHARSET="utf8mb4"
 # ── Putanje enginea ────────────────────────────────────────────────────────
 # Ove vrijednosti moraju odgovarati vrijednostima u web config.php
 ROOT_ENGINE_PATH="/root/8core_scanner"
-QUARANTINE_PATH="/root/8core_scanner/quarantine"
+QUARANTINE_BASE_PATH="/home/8core_quarantine"
 LOG_PATH="/root/8core_scanner/logs"

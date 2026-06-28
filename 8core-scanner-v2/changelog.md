@@ -6,6 +6,35 @@ Verzioniranje slijedi [Semantic Versioning](https://semver.org/lang/hr/).
 
 ---
 
+## [2.0.0-fix4] — 2026-06-28
+
+### Konfigurabilna karantena (QUARANTINE_BASE_PATH) (fix4)
+
+#### Izmijenjeno
+
+- **`install/index.php`** — polje `QUARANTINE_PATH` preimenovano u `QUARANTINE_BASE_PATH`:
+  - Default prijedlog promijenjen iz `/root/8core_scanner/quarantine` u `/home/8core_quarantine`
+  - Hint u formi: upozorenje da ne smije biti unutar public_html
+  - Bash varijabla u root install skripti preimenovana u `QUARANTINE_BASE_PATH`
+  - Root install script: dodan odvojeni `chown root:root` i `chmod 700` za `QUARANTINE_BASE_PATH`
+  - Checklist na koraku 3: dodan red za provjeru permisija karantene
+  - Scanner-db.conf u root install skripti: varijabla preimenovana u `QUARANTINE_BASE_PATH`
+- **`8core_scanner/scanner-db.conf.sample`** — varijabla `QUARANTINE_PATH` → `QUARANTINE_BASE_PATH`, default `/home/8core_quarantine`
+- **`scanner/install/templates/scanner-db.sample.conf`** — varijabla `QUARANTINE_PATH` → `QUARANTINE_BASE_PATH`, default `/home/8core_quarantine`
+- **`scanner/includes/config.sample.php`** — komentar uz `quarantine_path` navodi da ne smije biti u public_html, default `/home/8core_quarantine`
+- **`README.md`** — dodana sekcija za `QUARANTINE_BASE_PATH`:
+  - Pravila (van public_html, apsolutna putanja, root:root, 700)
+  - Default prijedlog `/home/8core_quarantine` s alternativama
+  - Napomena da scanner mora isključiti tu putanju iz scanova
+
+#### Nije izmijenjeno
+
+- Ključ `quarantine_path` u `config.php` i aplikacijskom kodu ostaje isti (interno)
+- Sav scan/PHP/bash logika
+- Struktura ZIP paketa
+
+---
+
 ## [2.0.0-fix3] — 2026-06-28
 
 ### Dodavanje root engine install koraka u installer (fix3)

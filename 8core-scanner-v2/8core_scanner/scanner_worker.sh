@@ -17,7 +17,7 @@ LOCK="/var/run/8core-scanner-worker.lock"
 # Putanje iz konfiguracije ili default
 LOG_PATH="${LOG_PATH:-${SCRIPT_DIR}/logs}"
 LOG="${LOG_PATH}/scanner-worker.log"
-QUARANTINE_BASE="${QUARANTINE_PATH:-${SCRIPT_DIR}/quarantine}"
+QUARANTINE_BASE="${QUARANTINE_BASE_PATH:-${QUARANTINE_PATH:-${SCRIPT_DIR}/quarantine}}"
 
 log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG"
@@ -31,7 +31,7 @@ source "$CONFIG"
 # Primijeni putanje iz config ako su postavljene
 LOG_PATH="${LOG_PATH:-${SCRIPT_DIR}/logs}"
 LOG="${LOG_PATH}/scanner-worker.log"
-QUARANTINE_BASE="${QUARANTINE_PATH:-${SCRIPT_DIR}/quarantine}"
+QUARANTINE_BASE="${QUARANTINE_BASE_PATH:-${QUARANTINE_PATH:-${SCRIPT_DIR}/quarantine}}"
 
 DB_HOST="${DB_HOST//$'\r'/}"
 DB_NAME="${DB_NAME//$'\r'/}"

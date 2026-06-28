@@ -6,6 +6,37 @@ Verzioniranje slijedi [Semantic Versioning](https://semver.org/lang/hr/).
 
 ---
 
+## [2.0.0-fix5] — 2026-06-28
+
+### Usklađivanje QUARANTINE_BASE_PATH i isključivanje iz scanova (fix5)
+
+#### Izmijenjeno
+
+- **`8core_scanner/scanner_worker.sh`** — `QUARANTINE_BASE` sada koristi redoslijed prioriteta:
+  1. `QUARANTINE_BASE_PATH` (nova varijabla iz installera)
+  2. `QUARANTINE_PATH` (stara varijabla, backward compat)
+  3. fallback: `${SCRIPT_DIR}/quarantine`
+  Promjena na oba mjesta (prije i poslije `source "$CONFIG"`).
+
+- **`8core_scanner/ioc_scan.sh`** — dodano isključivanje karantene iz scan operacija:
+  - `QUARANTINE_BASE_PATH` se čita iz configa s fallbackom na `QUARANTINE_PATH`
+  - Ako je `QUARANTINE_BASE_PATH` definiran i nalazi se unutar `BASE` scan putanje,
+    `find` koristi `-path "$QUARANTINE_BASE_PATH" -prune` da preskoči karantenu
+  - Primijenjeno na sve `scan_pattern` pozive i direktni `find` blok za shell indikatore
+
+- **`scanner/install/index.php`** — poboljšan hint za polje `QUARANTINE_BASE_PATH`:
+  eksplicitna napomena da ne smije biti unutar `public_html`, preporučene permisije i vlasnik
+
+- **`README.md`** — ažurirana napomena uz `QUARANTINE_BASE_PATH`:
+  opisano automatsko isključivanje iz skeniranja via `find -prune`
+
+#### Sigurnost
+
+- Karantena se više ne skenira tiho kao sumnjivi fajlovi (`ioc_scan.sh` je svjestan vlastite karantene)
+- `scanner_worker.sh` koristi ispravnu putanju karantene prema konfiguraciji — ne vraća se na `/root/8core_scanner/quarantine` ako je definiran `QUARANTINE_BASE_PATH`
+
+---
+
 ## [2.0.0-fix4] — 2026-06-28
 
 ### Konfigurabilna karantena (QUARANTINE_BASE_PATH) (fix4)

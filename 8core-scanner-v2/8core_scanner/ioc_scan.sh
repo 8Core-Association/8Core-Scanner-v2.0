@@ -58,6 +58,9 @@ DB_CHARSET="${DB_CHARSET//$'\r'/}"
 LOG_PATH="${LOG_PATH:-${SCRIPT_DIR}/logs}"
 RUN_LOG="${LOG_PATH}/ioc-scan-live.log"
 
+# Karantena se isključuje iz skeniranja
+QUARANTINE_BASE_PATH="${QUARANTINE_BASE_PATH:-${QUARANTINE_PATH:-}}"
+
 mkdir -p "$LOG_PATH"
 : > "$RUN_LOG"
 
@@ -275,9 +278,16 @@ scan_pattern() {
 
   log "Skeniranje: $title [$risk]"
 
-  find "$BASE" "$@" 2>/dev/null | while IFS= read -r file; do
-    insert_finding "$title" "$risk" "$file"
-  done
+  # Isključi QUARANTINE_BASE_PATH iz skeniranja ako je definiran i unutar BASE
+  if [ -n "$QUARANTINE_BASE_PATH" ] && [[ "$QUARANTINE_BASE_PATH" == "$BASE"* ]]; then
+    find "$BASE" -path "$QUARANTINE_BASE_PATH" -prune -o "$@" -print 2>/dev/null | while IFS= read -r file; do
+      insert_finding "$title" "$risk" "$file"
+    done
+  else
+    find "$BASE" "$@" 2>/dev/null | while IFS= read -r file; do
+      insert_finding "$title" "$risk" "$file"
+    done
+  fi
 }
 
 scan_pattern "filefuns.php" "CRITICAL" \
@@ -305,12 +315,22 @@ scan_pattern "cache.php sumnjive lokacije" "MEDIUM" \
 
 log "Skeniranje: poznati command shell indikatori [HIGH]"
 
-find "$BASE" \
-  -type f \( -name "*.php" -o -name "*.PHP" -o -name "*.Php" -o -name "*.pHp" -o -name "*.phtml" -o -name "*.php5" -o -name "*.phar" \) \
-  -exec grep -IlE "shell_exec|passthru|popen|proc_open|base64_decode|gzinflate|str_rot13|@eval|eval\(" {} \; \
-  2>/dev/null | while IFS= read -r file; do
-    insert_finding "poznati command shell indikatori" "HIGH" "$file"
-  done
+if [ -n "$QUARANTINE_BASE_PATH" ] && [[ "$QUARANTINE_BASE_PATH" == "$BASE"* ]]; then
+  find "$BASE" -path "$QUARANTINE_BASE_PATH" -prune -o \
+    -type f \( -name "*.php" -o -name "*.PHP" -o -name "*.Php" -o -name "*.pHp" -o -name "*.phtml" -o -name "*.php5" -o -name "*.phar" \) \
+    -print 2>/dev/null | \
+    xargs -r grep -IlE "shell_exec|passthru|popen|proc_open|base64_decode|gzinflate|str_rot13|@eval|eval\(" 2>/dev/null | \
+    while IFS= read -r file; do
+      insert_finding "poznati command shell indikatori" "HIGH" "$file"
+    done
+else
+  find "$BASE" \
+    -type f \( -name "*.php" -o -name "*.PHP" -o -name "*.Php" -o -name "*.pHp" -o -name "*.phtml" -o -name "*.php5" -o -name "*.phar" \) \
+    -exec grep -IlE "shell_exec|passthru|popen|proc_open|base64_decode|gzinflate|str_rot13|@eval|eval\(" {} \; \
+    2>/dev/null | while IFS= read -r file; do
+      insert_finding "poznati command shell indikatori" "HIGH" "$file"
+    done
+fi
 
 COUNT=$(mysql_run "SELECT COUNT(*) FROM findings WHERE scan_id=$SCAN_ID;")
 

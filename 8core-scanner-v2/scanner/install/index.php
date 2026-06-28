@@ -514,7 +514,10 @@ mv <?= htmlspecialchars(rtrim($detectedWebPath, '/'), ENT_QUOTES, 'UTF-8') ?>/in
           <div class="field">
             <label>Karantena (QUARANTINE_BASE_PATH)</label>
             <input type="text" name="quarantine_base_path" value="<?= htmlspecialchars($_POST['quarantine_base_path'] ?? '/home/8core_quarantine', ENT_QUOTES) ?>">
-            <div class="hint">Van public_html i van web roota. Ne mora biti unutar ROOT_ENGINE_PATH. Default: /home/8core_quarantine</div>
+            <div class="hint">
+              Ne mora biti unutar ROOT_ENGINE_PATH. Ne smije biti unutar <code>public_html</code> ili bilo kojeg web-dostupnog direktorija.
+              Preporučena permisija: <code>700</code>, vlasnik <code>root:root</code>. Default: <code>/home/8core_quarantine</code>
+            </div>
           </div>
           <div class="field">
             <label>Logovi (LOG_PATH)</label>

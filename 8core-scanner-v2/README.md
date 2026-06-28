@@ -200,7 +200,7 @@ Pravila za QUARANTINE_BASE_PATH:
 - Mora biti apsolutna putanja
 - Ne smije biti unutar `public_html` ili bilo kojeg web-dostupnog direktorija
 - Vlasnik: `root:root`, permisije: `700`
-- Scanner mora isključiti tu putanju iz budućih scanova
+- `ioc_scan.sh` automatski isključuje `QUARANTINE_BASE_PATH` iz skeniranja (prune) ako se nalazi unutar `BASE` scan putanje (npr. ako je scan `--all` i karantena je unutar `/home`)
 
 ```bash
 mkdir -p /root/8core_scanner
